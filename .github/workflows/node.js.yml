@@ -1,0 +1,24 @@
+name: Tester for deploy
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test
+        uses: actions/setup-node@v4
+
+      - run: npm i
+      - run: npm run build if applicable
+      - run: npm run test-component
